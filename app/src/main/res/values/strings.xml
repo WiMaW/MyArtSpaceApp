@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyArtSpaceApp</string>
+    <string name="apple">\"Apple\", Acrylics on paper</string>
+    <string name="ceramics">\"Ceramics\", Acrylics on paper</string>
+    <string name="coffeepot_and_box">\"Coffee pot and box\", Gouache on paper</string>
+    <string name="lake">\"Lake\", Acrylics on paper</string>
+    <string name="leaves">\"Leaves\", Gouache on paper</string>
+    <string name="starry_night">\"Starry night\", Watercolors on paper</string>
+    <string name="tomato">\"Tomato\", Gouache on paper</string>
+    <string name="vegetables">\"Vegetables\", Gouache on paper</string>
 </resources>
