@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,16 +17,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.myartspaceapp.ui.theme.MyArtSpaceAppTheme
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -48,32 +57,52 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComposeArtApp(modifier: Modifier = Modifier) {
-Column (
-    modifier = modifier.padding(20.dp),
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.SpaceEvenly
-) {
-    ButtonsNextPrev(text = "PREV")
-    ArtAndTitleDisplay()
-    ButtonsNextPrev(text = "NEXT")
-}
-}
-
-@Composable
-fun ButtonsNextPrev (
-    modifier: Modifier = Modifier,
-    text: String
-) {
-    Button(
-        modifier = Modifier.padding(15.dp),
-        onClick = { /*TODO*/ }) {
-        Text(text = text)
+    var click by remember {
+        mutableStateOf(0)
     }
+
+Column (
+    modifier = modifier
+        .padding(20.dp)
+        .background(Color(204, 200, 170))
+        .fillMaxWidth(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.SpaceEvenly,
+
+) {
+    Text(
+        text = stringResource(R.string.app_name),
+        modifier = Modifier.padding(20.dp),
+        fontSize = 22.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color(125, 124, 124)
+    )
+    Button(
+        onClick = {
+            if(click > 0) {
+                click--
+            }}
+    )
+    {
+        Text(text = "PREV")
+    }
+    ArtAndTitleDisplay(click = click)
+    Button(
+        onClick = {
+            if (click < 7) {
+            click++
+            }
+        })
+    {
+        Text(text = "NEXT")
+    }
+}
 }
 
 @Composable
 fun ArtAndTitleDisplay (
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    click: Int
 ) {
     var artImages: Array<Int> = arrayOf(
         R.drawable.apple,
@@ -96,8 +125,12 @@ fun ArtAndTitleDisplay (
         R.string.vegetables
     )
 
-    Image(painter = painterResource(id = artImages[0]), contentDescription = null)
-    Text(text = stringResource(id = artInfo[0]))
+    Image(
+        painter = painterResource(id = artImages[click]),
+        contentDescription = null,
+        modifier = Modifier.padding(25.dp)
+    )
+    Text(text = stringResource(id = artInfo[click]))
 }
 
 @Composable
