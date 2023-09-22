@@ -81,6 +81,8 @@ Column (
         onClick = {
             if(click > 0) {
                 click--
+            } else {
+                click = 7
             }}
     )
     {
@@ -91,6 +93,8 @@ Column (
         onClick = {
             if (click < 7) {
             click++
+            } else {
+                click = 0
             }
         })
     {
