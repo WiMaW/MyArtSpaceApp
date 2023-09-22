@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -45,7 +47,8 @@ class MainActivity : ComponentActivity() {
             MyArtSpaceAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     ComposeArtApp()
@@ -65,14 +68,15 @@ Column (
     modifier = modifier
         .padding(20.dp)
         .background(Color(204, 200, 170))
-        .fillMaxWidth(),
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState()),
     horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.SpaceEvenly,
+    verticalArrangement = Arrangement.Center,
 
 ) {
     Text(
         text = stringResource(R.string.app_name),
-        modifier = Modifier.padding(20.dp),
+        modifier = Modifier.padding(bottom = 60.dp),
         fontSize = 22.sp,
         fontWeight = FontWeight.Bold,
         color = Color(125, 124, 124)
@@ -118,6 +122,7 @@ fun ArtAndTitleDisplay (
         R.drawable.tomato,
         R.drawable.vegetables
     )
+    //var artImagesSize: Int = artImages.size
     var artInfo: Array<Int> = arrayOf(
         R.string.apple,
         R.string.ceramics,
@@ -128,13 +133,17 @@ fun ArtAndTitleDisplay (
         R.string.tomato,
         R.string.vegetables
     )
+    //var artInfoSize: Int = artInfo.size
 
     Image(
         painter = painterResource(id = artImages[click]),
         contentDescription = null,
-        modifier = Modifier.padding(25.dp)
+        modifier = Modifier.padding(20.dp)
     )
-    Text(text = stringResource(id = artInfo[click]))
+    Text(
+        modifier = Modifier.padding(20.dp),
+        text = stringResource(id = artInfo[click])
+    )
 }
 
 @Composable
