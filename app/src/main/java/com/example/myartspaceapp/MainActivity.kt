@@ -40,6 +40,11 @@ import androidx.compose.ui.unit.sp
 import com.example.myartspaceapp.ui.theme.MyArtSpaceAppTheme
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
+data class ArtAndDescription (
+    val art: Painter,
+    val contentDescription: String,
+    val artDescription: String
+)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color(60, 60, 60)
                 ) {
                     ComposeArtApp()
                 }
@@ -79,7 +84,7 @@ Column (
         modifier = Modifier.padding(bottom = 60.dp),
         fontSize = 22.sp,
         fontWeight = FontWeight.Bold,
-        color = Color(125, 124, 124)
+        color = Color(60, 60, 60)
     )
     Button(
         onClick = {
@@ -92,7 +97,7 @@ Column (
     {
         Text(text = "PREV")
     }
-    ArtAndTitleDisplay(click = click)
+    ArtAndDescriptionDisplay(click = click)
     Button(
         onClick = {
             if (click < 7) {
@@ -108,41 +113,73 @@ Column (
 }
 
 @Composable
-fun ArtAndTitleDisplay (
+fun ArtAndDescriptionDisplay (
     modifier: Modifier = Modifier,
     click: Int
 ) {
-    var artImages: Array<Int> = arrayOf(
-        R.drawable.apple,
-        R.drawable.ceramics,
-        R.drawable.coffepot_box,
-        R.drawable.lake,
-        R.drawable.leaves,
-        R.drawable.starry_night,
-        R.drawable.tomato,
-        R.drawable.vegetables
+    val art1 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.apple),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.apple)
+        )
+    val art2 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.ceramics),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.ceramics)
+        )
+    val art3 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.coffepot_box),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.coffeepot_and_box)
+        )
+    val art4 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.lake),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.lake)
+        )
+    val art5 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.leaves),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.leaves)
+        )
+    val art6 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.starry_night),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.starry_night)
+        )
+    val art7 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.tomato),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.tomato)
+        )
+    val art8 =
+        ArtAndDescription(
+            art = painterResource(R.drawable.vegetables),
+            contentDescription = "null",
+            artDescription = stringResource(R.string.vegetables)
+        )
+
+    var imageArtAndDescription = mutableListOf<ArtAndDescription>(
+        art1, art2, art3, art4, art5, art6, art7, art8
     )
-    //var artImagesSize: Int = artImages.size
-    var artInfo: Array<Int> = arrayOf(
-        R.string.apple,
-        R.string.ceramics,
-        R.string.coffeepot_and_box,
-        R.string.lake,
-        R.string.leaves,
-        R.string.starry_night,
-        R.string.tomato,
-        R.string.vegetables
-    )
-    //var artInfoSize: Int = artInfo.size
+
+    var imageArtAndDescriptionSize: Int = imageArtAndDescription.size
 
     Image(
-        painter = painterResource(id = artImages[click]),
-        contentDescription = null,
+        painter = imageArtAndDescription[click].art,
+        contentDescription = imageArtAndDescription[click].contentDescription,
         modifier = Modifier.padding(20.dp)
     )
     Text(
         modifier = Modifier.padding(20.dp),
-        text = stringResource(id = artInfo[click])
+        text = imageArtAndDescription[click].artDescription,
     )
 }
 
