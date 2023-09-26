@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.InspectableModifier
@@ -35,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myartspaceapp.ui.theme.MyArtSpaceAppTheme
@@ -43,7 +46,8 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 data class ArtAndDescription (
     val art: Painter,
     val contentDescription: String,
-    val artDescription: String
+    val artDescription: String,
+    val date: String
 )
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,49 +125,57 @@ fun ArtAndDescriptionDisplay (
         ArtAndDescription(
             art = painterResource(R.drawable.apple),
             contentDescription = "null",
-            artDescription = stringResource(R.string.apple)
+            artDescription = stringResource(R.string.apple),
+            date = stringResource(R.string.apple_date)
         )
     val art2 =
         ArtAndDescription(
             art = painterResource(R.drawable.ceramics),
             contentDescription = "null",
-            artDescription = stringResource(R.string.ceramics)
+            artDescription = stringResource(R.string.ceramics),
+            date = stringResource(R.string.ceramics_date)
         )
     val art3 =
         ArtAndDescription(
             art = painterResource(R.drawable.coffepot_box),
             contentDescription = "null",
-            artDescription = stringResource(R.string.coffeepot_and_box)
+            artDescription = stringResource(R.string.coffeepot_and_box),
+            date = stringResource(R.string.coffeepot_and_box_date)
         )
     val art4 =
         ArtAndDescription(
             art = painterResource(R.drawable.lake),
             contentDescription = "null",
-            artDescription = stringResource(R.string.lake)
+            artDescription = stringResource(R.string.lake),
+            date = stringResource(R.string.lake_date)
         )
     val art5 =
         ArtAndDescription(
             art = painterResource(R.drawable.leaves),
             contentDescription = "null",
-            artDescription = stringResource(R.string.leaves)
+            artDescription = stringResource(R.string.leaves),
+            date = stringResource(R.string.leaves_date)
         )
     val art6 =
         ArtAndDescription(
             art = painterResource(R.drawable.starry_night),
             contentDescription = "null",
-            artDescription = stringResource(R.string.starry_night)
+            artDescription = stringResource(R.string.starry_night),
+            date = stringResource(R.string.starry_night_date)
         )
     val art7 =
         ArtAndDescription(
             art = painterResource(R.drawable.tomato),
             contentDescription = "null",
-            artDescription = stringResource(R.string.tomato)
+            artDescription = stringResource(R.string.tomato),
+            date = stringResource(R.string.tomato_date)
         )
     val art8 =
         ArtAndDescription(
             art = painterResource(R.drawable.vegetables),
             contentDescription = "null",
-            artDescription = stringResource(R.string.vegetables)
+            artDescription = stringResource(R.string.vegetables),
+            date = stringResource(R.string.vegetables_date)
         )
 
     var imageArtAndDescription = mutableListOf<ArtAndDescription>(
@@ -176,11 +188,21 @@ fun ArtAndDescriptionDisplay (
         painter = imageArtAndDescription[click].art,
         contentDescription = imageArtAndDescription[click].contentDescription,
         modifier = Modifier.padding(20.dp)
+            .border(
+                width = Dp(10.0F),
+                color = Color(241, 239, 230),
+                shape = RectangleShape)
     )
     Text(
         modifier = Modifier.padding(20.dp),
         text = imageArtAndDescription[click].artDescription,
     )
+    Text(
+        modifier = Modifier.padding(bottom = 20.dp),
+        text = imageArtAndDescription[click].date,
+        fontSize = 12.sp
+    )
+
 }
 
 @Composable
