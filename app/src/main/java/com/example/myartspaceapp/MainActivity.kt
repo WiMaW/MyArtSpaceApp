@@ -12,10 +12,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.res.painterResource
@@ -40,6 +46,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myartspaceapp.data.Datasource
+import com.example.myartspaceapp.model.Art
 import com.example.myartspaceapp.ui.theme.MyArtSpaceAppTheme
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -58,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    color = Color(60, 60, 60)
+                    color = Color(204, 200, 170)
                 ) {
                     ComposeArtApp()
                 }
@@ -91,6 +99,7 @@ Column (
         color = Color(60, 60, 60)
     )
     Button(
+        modifier = modifier.padding(15.dp),
         onClick = {
             if(click > 0) {
                 click--
@@ -101,8 +110,11 @@ Column (
     {
         Text(text = "PREV")
     }
-    ArtAndDescriptionDisplay(click = click)
+
+    ArtAndDescriptionDisplay(click = click, artList = Datasource().LoadArt())
+
     Button(
+        modifier = modifier.padding(20.dp),
         onClick = {
             if (click < 7) {
             click++
@@ -116,93 +128,61 @@ Column (
 }
 }
 
+//@Composable
+//fun ArtList(artList: List<Art>, modifier: Modifier = Modifier) {
+//    LazyColumn(modifier = modifier) {
+//        items(artList) { art ->
+//            ArtAndDescriptionDisplay (
+//                art = art,
+//                modifier = modifier.padding(8.dp)
+//            )
+//
+//        }
+//    }
+//}
+
 @Composable
 fun ArtAndDescriptionDisplay (
     modifier: Modifier = Modifier,
+    artList: List<Art>,
     click: Int
 ) {
-    val art1 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.apple),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.apple),
-            date = stringResource(R.string.apple_date)
-        )
-    val art2 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.ceramics),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.ceramics),
-            date = stringResource(R.string.ceramics_date)
-        )
-    val art3 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.coffepot_box),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.coffeepot_and_box),
-            date = stringResource(R.string.coffeepot_and_box_date)
-        )
-    val art4 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.lake),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.lake),
-            date = stringResource(R.string.lake_date)
-        )
-    val art5 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.leaves),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.leaves),
-            date = stringResource(R.string.leaves_date)
-        )
-    val art6 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.starry_night),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.starry_night),
-            date = stringResource(R.string.starry_night_date)
-        )
-    val art7 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.tomato),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.tomato),
-            date = stringResource(R.string.tomato_date)
-        )
-    val art8 =
-        ArtAndDescription(
-            art = painterResource(R.drawable.vegetables),
-            contentDescription = "null",
-            artDescription = stringResource(R.string.vegetables),
-            date = stringResource(R.string.vegetables_date)
-        )
-
-    var imageArtAndDescription = mutableListOf<ArtAndDescription>(
-        art1, art2, art3, art4, art5, art6, art7, art8
-    )
-
-    var imageArtAndDescriptionSize: Int = imageArtAndDescription.size
-
-    Image(
-        painter = imageArtAndDescription[click].art,
-        contentDescription = imageArtAndDescription[click].contentDescription,
-        modifier = Modifier.padding(20.dp)
-            .border(
-                width = Dp(10.0F),
-                color = Color(241, 239, 230),
-                shape = RectangleShape)
-    )
-    Text(
-        modifier = Modifier.padding(20.dp),
-        text = imageArtAndDescription[click].artDescription,
-    )
-    Text(
-        modifier = Modifier.padding(bottom = 20.dp),
-        text = imageArtAndDescription[click].date,
-        fontSize = 12.sp
-    )
-
+    Card (modifier = modifier) {
+        Column (
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+            ){
+            Image(
+                painter = painterResource(artList[click].art),
+                contentDescription = stringResource(artList[click].contentDescription),
+                modifier = Modifier
+                    .padding(15.dp)
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentScale = ContentScale.Crop
+            )
+            Column (
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top){
+                Text(
+                    modifier = Modifier.padding(bottom = 10.dp),
+                    text = stringResource(artList[click].artDescription),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    modifier = Modifier.padding(bottom = 0.dp),
+                    text = stringResource(artList[click].method),
+                )
+                Text(
+                    modifier = Modifier.padding(bottom = 15.dp),
+                    text = stringResource(artList[click].date),
+                    fontSize = 12.sp
+                )
+            }
+        }
+    }
 }
 
 @Composable

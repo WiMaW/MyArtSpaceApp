@@ -1,14 +1,23 @@
 <resources>
     <string name="app_name">MyArtSpace App</string>
 
-    <string name="apple">\"Apple\", Acrylics on paper</string>
-    <string name="ceramics">\"Ceramics\", Acrylics on paper</string>
-    <string name="coffeepot_and_box">\"Coffee pot and box\", Gouache on paper</string>
-    <string name="lake">\"Lake\", Acrylics on paper</string>
-    <string name="leaves">\"Leaves\", Gouache on paper</string>
-    <string name="starry_night">\"Starry night\", Watercolors on paper</string>
-    <string name="tomato">\"Tomato\", Gouache on paper</string>
-    <string name="vegetables">\"Vegetables\", Gouache on paper</string>
+    <string name="apple">\"Apple\"</string>
+    <string name="ceramics">\"Ceramics\"</string>
+    <string name="coffeepot_and_box">\"Coffee pot and box\"</string>
+    <string name="lake">\"Lake\"</string>
+    <string name="leaves">\"Leaves\"</string>
+    <string name="starry_night">\"Starry night\"</string>
+    <string name="tomato">\"Tomato\"</string>
+    <string name="vegetables">\"Vegetables\"</string>
+
+    <string name="apple_method">Acrylics on paper</string>
+    <string name="ceramics_method">Acrylics on paper</string>
+    <string name="coffeepot_and_box_method">Gouache on paper</string>
+    <string name="lake_method">Acrylics on paper</string>
+    <string name="leaves_method">Gouache on paper</string>
+    <string name="starry_night_method">Watercolors on paper</string>
+    <string name="tomato_method">Gouache on paper</string>
+    <string name="vegetables_method">Gouache on paper</string>
 
     <string name="apple_date">September 2021</string>
     <string name="ceramics_date">October 2021</string>
