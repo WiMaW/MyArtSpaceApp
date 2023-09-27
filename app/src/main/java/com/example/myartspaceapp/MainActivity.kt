@@ -9,11 +9,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -79,51 +82,42 @@ fun ComposeArtApp(
     }
     var clickLimit: Int = artList.size - 1
 
-Column (
-    modifier = modifier
-        .padding(20.dp)
-        .background(Color(204, 200, 170))
-        .fillMaxWidth()
-        .verticalScroll(rememberScrollState()),
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
+    Column (
+        modifier = modifier
+            .padding(20.dp)
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
 
-) {
-    Text(
-        text = stringResource(R.string.app_name),
-        modifier = Modifier.padding(bottom = 60.dp),
-        fontSize = 22.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color(60, 60, 60)
-    )
-    Button(
-        modifier = modifier.padding(15.dp),
-        onClick = {
-            if(click > 0) {
-                click--
-            } else {
-                click = clickLimit
-            }}
-    )
-    {
-        Text(text = "PREV")
+    ) {
+        AppNameAndIconDisplay()
+        Button(
+            modifier = modifier.padding(15.dp),
+            onClick = {
+                if(click > 0) {
+                    click--
+                } else {
+                    click = clickLimit
+                }}
+        )
+        {
+            Text(text = "PREV")
+        }
+        ArtAndDescriptionDisplay(click = click, artList = Datasource().LoadArt())
+        Button(
+            modifier = modifier.padding(20.dp),
+            onClick = {
+                if (click < clickLimit) {
+                    click++
+                } else {
+                    click = 0
+                }
+            })
+        {
+            Text(text = "NEXT")
+        }
     }
-
-    ArtAndDescriptionDisplay(click = click, artList = Datasource().LoadArt())
-
-    Button(
-        modifier = modifier.padding(20.dp),
-        onClick = {
-            if (click < clickLimit) {
-            click++
-            } else {
-                click = 0
-            }
-        })
-    {
-        Text(text = "NEXT")
-    }
-}
 }
 
 //@Composable
@@ -138,6 +132,26 @@ Column (
 //        }
 //    }
 //}
+@Composable
+fun AppNameAndIconDisplay (modifier: Modifier = Modifier) {
+    Row (modifier = modifier){
+        Image(
+            painter = painterResource(R.drawable.app_icon),
+            contentDescription = null,
+            modifier = Modifier
+                .height(35.dp)
+                .width(35.dp)
+        )
+        Text(
+            text = stringResource(R.string.app_name),
+            modifier = Modifier.padding(top = 15.dp, bottom = 60.dp),
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(60, 60, 60),
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
+}
 
 @Composable
 fun ArtAndDescriptionDisplay (
@@ -167,15 +181,18 @@ fun ArtAndDescriptionDisplay (
                 Text(
                     modifier = Modifier.padding(bottom = 10.dp),
                     text = stringResource(artList[click].artDescription),
+                    color = Color(60, 60, 60),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Text(
                     modifier = Modifier.padding(bottom = 0.dp),
                     text = stringResource(artList[click].method),
+                    color = Color(60, 60, 60)
                 )
                 Text(
                     modifier = Modifier.padding(bottom = 15.dp),
                     text = stringResource(artList[click].date),
+                    color = Color(60, 60, 60),
                     fontSize = 12.sp
                 )
             }
