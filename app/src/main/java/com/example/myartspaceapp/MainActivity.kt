@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = Color(204, 200, 170)
                 ) {
-                    ComposeArtApp()
+                    ComposeArtApp(artList = Datasource().LoadArt())
                 }
             }
         }
@@ -76,10 +76,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ComposeArtApp(modifier: Modifier = Modifier) {
+fun ComposeArtApp(
+    modifier: Modifier = Modifier,
+    artList: List<Art>,
+    ) {
     var click by remember {
         mutableStateOf(0)
     }
+    var clickLimit: Int = artList.size - 1
 
 Column (
     modifier = modifier
@@ -104,7 +108,7 @@ Column (
             if(click > 0) {
                 click--
             } else {
-                click = 7
+                click = clickLimit
             }}
     )
     {
@@ -116,7 +120,7 @@ Column (
     Button(
         modifier = modifier.padding(20.dp),
         onClick = {
-            if (click < 7) {
+            if (click < clickLimit) {
             click++
             } else {
                 click = 0
@@ -194,6 +198,6 @@ fun Settings(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     MyArtSpaceAppTheme {
-        ComposeArtApp()
+        ComposeArtApp(artList = Datasource().LoadArt())
     }
 }
