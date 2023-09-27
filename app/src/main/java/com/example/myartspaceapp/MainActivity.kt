@@ -51,12 +51,6 @@ import com.example.myartspaceapp.model.Art
 import com.example.myartspaceapp.ui.theme.MyArtSpaceAppTheme
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
-data class ArtAndDescription (
-    val art: Painter,
-    val contentDescription: String,
-    val artDescription: String,
-    val date: String
-)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -196,7 +190,7 @@ fun Settings(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MyArtSpacePreview() {
     MyArtSpaceAppTheme {
         ComposeArtApp(artList = Datasource().LoadArt())
     }
