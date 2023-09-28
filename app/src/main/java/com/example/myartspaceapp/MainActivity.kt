@@ -43,8 +43,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -63,8 +65,8 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    color = Color(204, 200, 170)
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background)
                 ) {
                     ComposeArtApp(artList = Datasource().LoadArt())
                 }
@@ -138,21 +140,19 @@ fun ComposeArtApp(
 fun DisplayAppNameAndIcon (modifier: Modifier = Modifier) {
     Row (modifier = modifier){
         Image(
-            painter = painterResource(R.drawable.app_icon),
+            painter = painterResource(R.drawable.app_icon2),
             contentDescription = null,
             modifier = Modifier
                 .height(35.dp)
-                .width(35.dp)
+                .width(35.dp),
         )
         Text(
             text = stringResource(R.string.app_name),
             modifier = Modifier.padding(
                 top = dimensionResource(R.dimen.padding_medium),
                 bottom = dimensionResource(R.dimen.padding_large)),
-            fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(60, 60, 60),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.headlineLarge
         )
     }
 }
@@ -167,7 +167,7 @@ fun ArtAndDescriptionCard (
         Column (
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
             ){
             Image(
                 painter = painterResource(artList[click].art),
@@ -176,28 +176,30 @@ fun ArtAndDescriptionCard (
                     .padding(dimensionResource(R.dimen.padding_medium))
                     .fillMaxWidth()
                     .height(200.dp),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
             Column (
                 modifier = modifier,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top){
                 Text(
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_small)),
-                    text = stringResource(artList[click].artDescription),
-                    color = Color(60, 60, 60),
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Text(
-                    modifier = Modifier.padding(bottom = 0.dp),
-                    text = stringResource(artList[click].method),
-                    color = Color(60, 60, 60)
-                )
-                Text(
                     modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium)),
+                    text = stringResource(artList[click].artDescription),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = stringResource(artList[click].method),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            bottom = dimensionResource(R.dimen.padding_medium),
+                            top = dimensionResource(R.dimen.padding_small
+                    )),
                     text = stringResource(artList[click].date),
-                    color = Color(60, 60, 60),
-                    fontSize = 12.sp
+                    style = MaterialTheme.typography.bodySmall
+
                 )
             }
         }
@@ -213,6 +215,14 @@ fun Settings(modifier: Modifier = Modifier) {
 @Composable
 fun MyArtSpacePreview() {
     MyArtSpaceAppTheme {
+        ComposeArtApp(artList = Datasource().LoadArt())
+    }
+}
+
+@Preview
+@Composable
+fun MyArtSpaceDarkPreview() {
+    MyArtSpaceAppTheme (darkTheme = true){
         ComposeArtApp(artList = Datasource().LoadArt())
     }
 }
