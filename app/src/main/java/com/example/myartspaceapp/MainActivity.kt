@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.InspectableModifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -91,7 +92,7 @@ fun ComposeArtApp(
         verticalArrangement = Arrangement.Center,
 
     ) {
-        AppNameAndIconDisplay()
+        DisplayAppNameAndIcon()
         Button(
             modifier = modifier.padding(15.dp),
             onClick = {
@@ -104,7 +105,7 @@ fun ComposeArtApp(
         {
             Text(text = "PREV")
         }
-        ArtAndDescriptionDisplay(click = click, artList = Datasource().LoadArt())
+        ArtAndDescriptionCard(click = click, artList = Datasource().LoadArt())
         Button(
             modifier = modifier.padding(20.dp),
             onClick = {
@@ -120,6 +121,7 @@ fun ComposeArtApp(
     }
 }
 
+//to change view for scrollable list
 //@Composable
 //fun ArtList(artList: List<Art>, modifier: Modifier = Modifier) {
 //    LazyColumn(modifier = modifier) {
@@ -133,7 +135,7 @@ fun ComposeArtApp(
 //    }
 //}
 @Composable
-fun AppNameAndIconDisplay (modifier: Modifier = Modifier) {
+fun DisplayAppNameAndIcon (modifier: Modifier = Modifier) {
     Row (modifier = modifier){
         Image(
             painter = painterResource(R.drawable.app_icon),
@@ -144,7 +146,9 @@ fun AppNameAndIconDisplay (modifier: Modifier = Modifier) {
         )
         Text(
             text = stringResource(R.string.app_name),
-            modifier = Modifier.padding(top = 15.dp, bottom = 60.dp),
+            modifier = Modifier.padding(
+                top = dimensionResource(R.dimen.padding_medium),
+                bottom = dimensionResource(R.dimen.padding_large)),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             color = Color(60, 60, 60),
@@ -154,7 +158,7 @@ fun AppNameAndIconDisplay (modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ArtAndDescriptionDisplay (
+fun ArtAndDescriptionCard (
     modifier: Modifier = Modifier,
     artList: List<Art>,
     click: Int
@@ -169,7 +173,7 @@ fun ArtAndDescriptionDisplay (
                 painter = painterResource(artList[click].art),
                 contentDescription = stringResource(artList[click].contentDescription),
                 modifier = Modifier
-                    .padding(15.dp)
+                    .padding(dimensionResource(R.dimen.padding_medium))
                     .fillMaxWidth()
                     .height(200.dp),
                 contentScale = ContentScale.Crop
@@ -179,7 +183,7 @@ fun ArtAndDescriptionDisplay (
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top){
                 Text(
-                    modifier = Modifier.padding(bottom = 10.dp),
+                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_small)),
                     text = stringResource(artList[click].artDescription),
                     color = Color(60, 60, 60),
                     style = MaterialTheme.typography.headlineSmall
@@ -190,7 +194,7 @@ fun ArtAndDescriptionDisplay (
                     color = Color(60, 60, 60)
                 )
                 Text(
-                    modifier = Modifier.padding(bottom = 15.dp),
+                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium)),
                     text = stringResource(artList[click].date),
                     color = Color(60, 60, 60),
                     fontSize = 12.sp
