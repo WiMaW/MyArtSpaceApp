@@ -1,5 +1,6 @@
 package com.example.myartspaceapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,6 +40,9 @@ import com.example.myartspaceapp.data.Datasource
 import com.example.myartspaceapp.model.Art
 import com.example.myartspaceapp.ui.theme.MyArtSpaceAppTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +62,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ComposeArtApp(
     modifier: Modifier = Modifier,
@@ -67,44 +73,49 @@ fun ComposeArtApp(
         mutableStateOf(0)
     }
     var clickLimit: Int = artList.size - 1
-
-    Column (
-        modifier = modifier
-            .padding(20.dp)
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-
-    ) {
-        DisplayAppNameAndIcon()
-        Button(
+    Scaffold () {
+        Column (
             modifier = modifier
-                .padding(15.dp),
-            onClick = {
-                if(click > 0) {
-                    click--
-                } else {
-                    click = clickLimit
-                }}
-        )
-        {
-            Text(text = "PREV")
-        }
-        ArtAndDescriptionCard(click = click, artList = Datasource().LoadArt())
-        Button(
-            modifier = modifier.padding(20.dp),
-            onClick = {
-                if (click < clickLimit) {
-                    click++
-                } else {
-                    click = 0
-                }
-            })
-        {
-            Text(text = "NEXT")
+                .padding(20.dp)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+
+            ) {
+            DisplayAppNameAndIcon()
+            Button(
+                modifier = modifier
+                    .padding(
+                        top = dimensionResource(R.dimen.padding_large),
+                        bottom = dimensionResource(R.dimen.padding_medium)
+                    ),
+                onClick = {
+                    if(click > 0) {
+                        click--
+                    } else {
+                        click = clickLimit
+                    }}
+            )
+            {
+                Text(text = "PREV")
+            }
+            ArtAndDescriptionCard(click = click, artList = Datasource().LoadArt())
+            Button(
+                modifier = modifier.padding(dimensionResource(R.dimen.padding_medium)),
+                onClick = {
+                    if (click < clickLimit) {
+                        click++
+                    } else {
+                        click = 0
+                    }
+                })
+            {
+                Text(text = "NEXT")
+            }
         }
     }
+
 }
 
 //to change view for scrollable list
@@ -120,27 +131,32 @@ fun ComposeArtApp(
 //        }
 //    }
 //}
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DisplayAppNameAndIcon (modifier: Modifier = Modifier) {
-    Row (modifier = modifier){
-        Image(
-            painter = painterResource(R.drawable.app_icon2),
-            contentDescription = null,
-            modifier = Modifier
-                .height(35.dp)
-                .width(35.dp)
-                .clip(MaterialTheme.shapes.small),
-        )
-        Text(
-            text = stringResource(R.string.app_name),
-            modifier = Modifier.padding(
-                top = dimensionResource(R.dimen.padding_medium),
-                bottom = dimensionResource(R.dimen.padding_large)),
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineLarge
-        )
+    CenterAlignedTopAppBar(
+        title = {
+            Row (modifier = modifier){
+                Image(
+                    painter = painterResource(R.drawable.app_icon2),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(35.dp)
+                        .width(35.dp)
+                        .clip(MaterialTheme.shapes.small),
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    modifier = Modifier.padding(
+                        top = dimensionResource(R.dimen.padding_medium)),
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+        }
+    )
+
     }
-}
+
 
 @Composable
 fun ArtAndDescriptionCard (
@@ -180,8 +196,7 @@ fun ArtAndDescriptionCard (
                     modifier = Modifier
                         .padding(
                             bottom = dimensionResource(R.dimen.padding_medium),
-                            top = dimensionResource(R.dimen.padding_small
-                    )),
+                            top = dimensionResource(R.dimen.padding_small)),
                     text = stringResource(artList[click].date),
                     style = MaterialTheme.typography.bodySmall
 

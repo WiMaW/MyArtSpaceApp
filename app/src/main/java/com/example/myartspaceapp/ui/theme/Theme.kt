@@ -14,7 +14,11 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.core.view.WindowCompat
+import com.example.myartspaceapp.R
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -80,6 +84,12 @@ private val DarkColors = darkColorScheme(
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
 )
+
+val Croissantone = FontFamily(Font(R.font.croissantone_regular))
+val JostLight = FontFamily(Font(R.font.jost_light, FontWeight.Light))
+val JostRegular = FontFamily(Font(R.font.jost_regular, FontWeight.Normal))
+val JostSemiBold = FontFamily(Font(R.font.jost_semibold, FontWeight.SemiBold))
+val Mooli = FontFamily(Font(R.font.mooli_regular))
 
 @Composable
 fun MyArtSpaceAppTheme(
